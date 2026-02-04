@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} Recommendation | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>{{ title }} Recommendation</h1>
+        <p>Capture questionnaire details and assigned products.</p>
+    </div>
+    <a class="button secondary" href="{% url 'recommendation_list' %}">Back to Recommendations</a>
+</section>
+
+<section class="card">
+    <form method="post" class="form-grid">
+        {% csrf_token %}
+        <label>
+            Full Name
+            {{ form.full_name }}
+        </label>
+        <label>
+            Email
+            {{ form.email }}
+        </label>
+        <label>
+            Category
+            {{ form.category }}
+        </label>
+        <label class="full">
+            Concerns
+            {{ form.concerns }}
+        </label>
+        <label class="full">
+            Recommended Products
+            {{ form.recommended_products }}
+        </label>
+        <div class="form-actions full">
+            <button type="submit" class="button primary">Save</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

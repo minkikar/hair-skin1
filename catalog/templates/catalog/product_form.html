@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} Product | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>{{ title }} Product</h1>
+        <p>Keep product details accurate and up to date.</p>
+    </div>
+    <a class="button secondary" href="{% url 'product_list' %}">Back to Products</a>
+</section>
+
+<section class="card">
+    <form method="post" enctype="multipart/form-data" class="form-grid">
+        {% csrf_token %}
+        <label>
+            Name
+            {{ form.name }}
+        </label>
+        <label>
+            Category
+            {{ form.category }}
+        </label>
+        <label>
+            Type
+            {{ form.product_type }}
+        </label>
+        <label class="full">
+            Description
+            {{ form.description }}
+        </label>
+        <label class="full">
+            Ingredients
+            {{ form.ingredients }}
+        </label>
+        <label>
+            Price
+            {{ form.price }}
+        </label>
+        <label>
+            Image
+            {{ form.image }}
+        </label>
+        <div class="form-actions full">
+            <button type="submit" class="button primary">Save</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

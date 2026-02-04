@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Product | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>Delete Product</h1>
+        <p>This action cannot be undone.</p>
+    </div>
+    <a class="button secondary" href="{% url 'product_list' %}">Cancel</a>
+</section>
+
+<section class="card">
+    <p>Are you sure you want to delete <strong>{{ product.name }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button danger">Delete</button>
+    </form>
+</section>
+{% endblock %}

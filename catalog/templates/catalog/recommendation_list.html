@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommendations | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>Recommendations</h1>
+        <p>Review questionnaire submissions and product popularity.</p>
+    </div>
+    <a class="button" href="{% url 'recommendation_create' %}">New Recommendation</a>
+</section>
+
+<section class="stats-grid">
+    <div class="card">
+        <h3>Most Recommended Products</h3>
+        {% if popular_products %}
+            <ul class="top-list">
+                {% for product in popular_products %}
+                    <li>
+                        <div>
+                            <strong>{{ product.name }}</strong>
+                            <span>{{ product.get_category_display }} · {{ product.product_type }}</span>
+                        </div>
+                        <span class="pill">{{ product.reco_count }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="muted">No recommendations recorded yet.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Category</th>
+                <th>Concerns</th>
+                <th>Suggested Products</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recommendation in recommendations %}
+            <tr>
+                <td>
+                    <strong>{{ recommendation.full_name }}</strong>
+                    <div class="muted">{{ recommendation.email }}</div>
+                </td>
+                <td>{{ recommendation.get_category_display }}</td>
+                <td>{{ recommendation.concerns }}</td>
+                <td>
+                    <ul class="compact-list">
+                        {% for product in recommendation.recommended_products.all %}
+                            <li>{{ product.name }}</li>
+                        {% empty %}
+                            <li class="muted">No product selected</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ recommendation.created_at|date:"M d, Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="muted">No recommendations yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
