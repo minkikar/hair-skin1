@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Products | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>Products</h1>
+        <p>Manage the catalog of hair and skin care items.</p>
+    </div>
+    <a class="button" href="{% url 'product_create' %}">Add Product</a>
+</section>
+
+<section class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="row-title">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div>
+                        <strong>{{ product.name }}</strong>
+                        <div class="muted">{{ product.description|truncatechars:70 }}</div>
+                    </div>
+                </td>
+                <td>{{ product.get_category_display }}</td>
+                <td>{{ product.product_type }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.updated_at|date:"M d, Y" }}</td>
+                <td class="actions">
+                    <a href="{% url 'product_update' product.pk %}">Edit</a>
+                    <a class="danger" href="{% url 'product_delete' product.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="muted">No products yet. Add your first product to get started.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
